@@ -29,7 +29,7 @@ exports.generateInvoiceHtml = (data) => {
         <h1>RECEIPT</h1>
         <div class="details">
           <div>
-            <p><strong>Invoice #:</strong> ${invoiceNumber}</p>
+            <p><strong>Receipt #:</strong> ${invoiceNumber}</p>
             <p><strong>Date:</strong> ${date}</p>
           </div>
           <div style="text-align:right">
