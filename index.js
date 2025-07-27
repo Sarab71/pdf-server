@@ -12,6 +12,10 @@ app.use(cors({
 
 app.use(express.json({ limit: '10mb' }));
 
+app.get('/', (req, res) => {
+  res.send('PDF server is live ✅');
+});
+
 // PDF generation route
 app.post('/generate-pdf', async (req, res) => {
   const data = req.body;
