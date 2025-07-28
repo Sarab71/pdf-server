@@ -7,7 +7,7 @@ const app = express();
 
 // CORS for frontend
 app.use(cors({
-  origin: 'https://cases-frontend.vercel.app', // ✅ Change to your frontend URL
+  origin: 'https://casesbilling.vercel.app', // ✅ Change to your frontend URL
 }));
 
 app.use(express.json({ limit: '10mb' }));
