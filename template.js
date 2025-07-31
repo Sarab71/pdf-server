@@ -1,5 +1,5 @@
 exports.generateInvoiceHtml = (data) => {
-  const { invoiceNumber, customer, items, grandTotal, date } = data;
+  const { invoiceNumber, customer, items, grandTotal, date, totalQty } = data;
   const roundedGrandTotal = Math.round(grandTotal);
 
   const rows = items?.map((item, idx) => `
@@ -48,9 +48,17 @@ exports.generateInvoiceHtml = (data) => {
               <th>Total</th>
             </tr>
           </thead>
-          <tbody>${rows}</tbody>
+          <tbody>
+            ${rows}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2"><strong>Total</strong></td>
+              <td><strong>${totalQty}</strong></td>
+              <td colspan="3"><strong>Grand Total: ₹${roundedGrandTotal}</strong></td>
+            </tr>
+          </tfoot>
         </table>
-        <p class="total"><strong>Grand Total: ₹${roundedGrandTotal}</strong></p>
       </body>
     </html>
   `;
