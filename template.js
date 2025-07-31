@@ -8,7 +8,7 @@ exports.generateInvoiceHtml = (data) => {
       <td>${item.modelNumber}</td>
       <td>${item.quantity}</td>
       <td>${item.rate}</td>
-      <td>${item.discount}%</td>
+      <td>${item.discount === '' ? '' : item.discount + '%'}</td>
       <td>₹${item.totalAmount}</td>
     </tr>
   `).join('') || '';
