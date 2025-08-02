@@ -44,7 +44,7 @@ app.post('/generate-pdf', async (req, res) => {
 
 app.post('/generate-statement', async (req, res) => {
   const { customerName, transactions } = req.body;
-  const htmlContent = generateStatementHtml(customerName, transactions);
+  const htmlContent = generateStatementHtml({customerName, transactions});
 
   const file = { content: htmlContent };
   const options = { format: 'A4' };
