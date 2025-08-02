@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const pdf = require('html-pdf-node');
-const { generateInvoiceHtml } = require('./template');
+const { generateInvoiceHtml, generateStatementHtml } = require('./template');
 
 const app = express();
 
@@ -37,6 +37,31 @@ app.post('/generate-pdf', async (req, res) => {
     res.status(500).json({ error: 'Failed to generate PDF', details: err.message });
   }
 });
+
+app.post('/generate-statement', async (req, res) => {
+  const { customerName, transactions } = req.body;
+  const htmlContent = generateStatementHtml(customerName, transactions);
+
+  const file = { content: htmlContent };
+  const options = { format: 'A4' };
+
+  try {
+    const pdfBuffer = await pdf.generatePdf(file, options);
+    const filename = `Statement_${customerName.replace(/\s+/g, '_')}.pdf`;
+
+    res.writeHead(200, {
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="${filename}"`,
+      'Content-Length': pdfBuffer.length
+    });
+
+    res.end(pdfBuffer);
+  } catch (err) {
+    console.error('PDF generation failed:', err);
+    res.status(500).json({ error: 'Failed to generate PDF', details: err.message });
+  }
+});
+
 
 // Start server
 const PORT = process.env.PORT || 3000;

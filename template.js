@@ -63,3 +63,64 @@ exports.generateInvoiceHtml = (data) => {
     </html>
   `;
 };
+
+exports.generateStatementHtml = (customerName, transactions) => {
+  const rows = transactions.map((txn) => {
+    const date = new Date(txn.date).toLocaleDateString();
+    const debit = txn.debit ? txn.debit.toFixed(2) : '';
+    const credit = txn.credit ? txn.credit.toFixed(2) : '';
+    const balance = txn.balance.toFixed(2);
+    const desc = txn.invoiceNumber
+      ? `Invoice #${txn.invoiceNumber}`
+      : txn.description || txn.particulars || 'Payment';
+
+    return `<tr>
+      <td>${date}</td>
+      <td>${desc}</td>
+      <td style="text-align:right">${debit}</td>
+      <td style="text-align:right">${credit}</td>
+      <td style="text-align:right">${balance}</td>
+    </tr>`;
+  }).join('');
+
+  return `
+    <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 10px; font-size: 12px; }
+          h2 { margin-bottom: 20px; }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+          }
+          th, td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+          }
+          th {
+            background-color: #f0f0f0;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>Statement of ${customerName}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Particulars</th>
+              <th>Debit (₹)</th>
+              <th>Credit (₹)</th>
+              <th>Balance (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </body>
+    </html>
+  `;
+};
