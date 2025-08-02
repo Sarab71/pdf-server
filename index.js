@@ -4,12 +4,20 @@ const pdf = require('html-pdf-node');
 const { generateInvoiceHtml, generateStatementHtml } = require('./template');
 
 const app = express();
-
+const allowedOrigins = [
+  'https://casesbilling.vercel.app',  // production
+  'http://localhost:3000',            // development
+];
 // CORS for frontend
 app.use(cors({
-  origin: 'https://casesbilling.vercel.app', // ✅ Change to your frontend URL
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
 }));
-
 app.use(express.json({ limit: '10mb' }));
 
 app.get('/', (req, res) => {

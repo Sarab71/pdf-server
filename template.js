@@ -64,31 +64,38 @@ exports.generateInvoiceHtml = (data) => {
   `;
 };
 
-exports.generateStatementHtml = (customerName, transactions) => {
-  const rows = transactions.map((txn) => {
-    const date = new Date(txn.date).toLocaleDateString();
-    const debit = txn.debit ? txn.debit.toFixed(2) : '';
-    const credit = txn.credit ? txn.credit.toFixed(2) : '';
-    const balance = txn.balance.toFixed(2);
-    const desc = txn.invoiceNumber
-      ? `Invoice #${txn.invoiceNumber}`
-      : txn.description || txn.particulars || 'Payment';
+exports.generateStatementHtml = (data) => {
+  const { customerName, transactions } = data;
 
-    return `<tr>
-      <td>${date}</td>
-      <td>${desc}</td>
-      <td style="text-align:right">${debit}</td>
-      <td style="text-align:right">${credit}</td>
-      <td style="text-align:right">${balance}</td>
-    </tr>`;
-  }).join('');
+  let rows = '';
+  if (transactions && Array.isArray(transactions)) {
+    transactions.forEach((txn) => {
+      const date = new Date(txn.date).toLocaleDateString('en-GB'); // dd-mm-yyyy
+      const debit = txn.debit ? txn.debit.toFixed(2) : '';
+      const credit = txn.credit ? txn.credit.toFixed(2) : '';
+      const balance = txn.balance ? txn.balance.toFixed(2) : '';
+      const desc = txn.invoiceNumber
+        ? `Invoice #${txn.invoiceNumber}`
+        : txn.description || txn.particulars || 'Payment';
+
+      rows += `
+        <tr>
+          <td>${date}</td>
+          <td>${desc}</td>
+          <td style="text-align:right">${debit}</td>
+          <td style="text-align:right">${credit}</td>
+          <td style="text-align:right">${balance}</td>
+        </tr>
+      `;
+    });
+  }
 
   return `
     <html>
       <head>
         <style>
           body { font-family: Arial, sans-serif; padding: 10px; font-size: 12px; }
-          h2 { margin-bottom: 20px; }
+          h2 { text-align: center; font-size: 18px; margin-bottom: 10px; }
           table {
             width: 100%;
             border-collapse: collapse;
