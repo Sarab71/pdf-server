@@ -18,7 +18,8 @@ exports.generateInvoiceHtml = (data) => {
       <head>
         <style>
           body { font-family: Arial, sans-serif; padding: 10px; font-size: 12px; }
-          h1 { text-align: center; font-size: 18px; margin-bottom: 10px; }
+          h1 { text-align: center; margin-bottom: 10px; }
+          h2 { text-align: center; margin-bottom: 10px; }
           .details { display: flex; justify-content: space-between; margin-bottom: 10px; }
           table { width: 100%; border-collapse: collapse; }
           th, td { border: 1px solid #999; padding: 4px; text-align: center; font-size: 11px; }
