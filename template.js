@@ -31,11 +31,14 @@ exports.generateInvoiceHtml = (data) => {
         <h2>RECEIPT</h2>
         <div class="details">
           <div>
+            <p><strong>Address: Q-2 BASEMENT RAJOURI GARDEN JANAKPURI NEW
+DELHI 110027</strong> </p>
+            <p><strong>Phone:</strong> +91 9319747717</p>
             <p><strong>Receipt #:</strong> ${invoiceNumber}</p>
             <p><strong>Date:</strong> ${date}</p>
           </div>
           <div style="text-align:right">
-            <p><strong>Customer:</strong> ${customer?.name || ''}</p>
+            <p><strong>Bill To:</strong> ${customer?.name || ''}</p>
             <p><strong>Address:</strong> ${customer?.address || ''}</p>
           </div>
         </div>
