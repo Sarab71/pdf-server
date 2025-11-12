@@ -38,11 +38,8 @@ exports.generateInvoiceHtml = (data) => {
           </div>
 <div style="text-align:right; max-width: 45%;">
   <p style="margin:0;"><strong>Bill To:</strong> ${customer?.name || ''}</p>
-  <p style="margin:0; white-space: pre-wrap; word-wrap: break-word; text-align: right;">
-    <strong>Address:</strong> 
-    <span style="display:inline-block; text-align:left; max-width: 100%;">
-      ${customer?.address || ''}
-    </span>
+  <p style="margin:0; white-space: pre-wrap; word-wrap: break-word;">
+    <strong>Address:</strong> ${customer?.address || ''}
   </p>
 </div>
 
