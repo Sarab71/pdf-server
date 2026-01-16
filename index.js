@@ -7,6 +7,7 @@ const app = express();
 const allowedOrigins = [
   'https://casesbilling.vercel.app',  // production
   'http://localhost:3000',            // development
+  'https://cases-demo.vercel.app',    // demo site
 ];
 // CORS for frontend
 app.use(cors({
