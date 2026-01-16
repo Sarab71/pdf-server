@@ -11,8 +11,16 @@ const allowedOrigins = [
 ];
 // CORS for frontend
 app.use(cors({
-  origin: 'https://casesbilling.vercel.app', // ✅ Change to your frontend URL
+  origin: function (origin, callback) {
+    // Allow requests with no origin (Postman, server-to-server)
+    if (!origin) return callback(null, true);
 
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 
 app.use(express.json({ limit: '10mb' }));
